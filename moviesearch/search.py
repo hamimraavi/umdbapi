@@ -11,6 +11,7 @@ def get_soup(movie):
     br.open(url)
     try:
         link = list(br.links(url_regex = re.compile(r"/title/tt*")))[0]
+        print link
     except:
         return ""
     else:
@@ -18,40 +19,35 @@ def get_soup(movie):
         soup = BeautifulSoup(res.read())
         return soup
 
-def get_title(movie):
+def get_title(movie, soup):
     try:
-        soup = get_soup(movie)
         return soup.find('title').contents[0]  
     except:
         return "N/A"
 
-def get_year(movie):
+def get_year(movie, soup):
     try:
-        soup = get_soup(movie)
         title_year = soup.find('span', id='titleYear')
         year = str(title_year)
         return re.search('.*([0-9]{4}).*', year).group(1)
     except:
         return "N/A"
 
-def get_rating(movie):
+def get_rating(movie, soup):
     try:
-        soup = get_soup(movie)
         rate = soup.find('span', itemprop='ratingValue')
         return str(rate.contents[0])  
     except:
         return "N/A"
 
-def get_votes(movie):
+def get_votes(movie, soup):
     try:
-        soup = get_soup(movie)
         return soup.find('span', itemprop='ratingCount').contents[0]
     except:
         return "N/A"
 
-def get_actors(movie):
+def get_actors(movie, soup):
     try:
-        soup = get_soup(movie)
         actor_list = soup.findAll('span', itemprop='actors')
         actors = []
         for actor in actor_list:
@@ -61,9 +57,8 @@ def get_actors(movie):
     except:
         return "N/A"
 
-def get_director(movie):
+def get_director(movie, soup):
     try:
-        soup = get_soup(movie)
         director_list = soup.findAll('span', itemprop='director')
         directors = []
         for director in director_list:
@@ -73,9 +68,8 @@ def get_director(movie):
     except: 
         return "N/A"
 
-def get_writer(movie):
+def get_writer(movie, soup):
     try:
-        soup = get_soup(movie)
         writer_list = soup.findAll('span', itemprop='creator')
         writers=[]
         for writer in writer_list:
@@ -85,24 +79,21 @@ def get_writer(movie):
     except:
         return "N/A"
 
-def get_duration(movie):
+def get_duration(movie, soup):
     try:
-        soup = get_soup(movie)
         return soup.find('time', itemprop='duration').contents[0].strip()
     except:
         return "N/A"
 
-def get_content_rating(movie):
+def get_content_rating(movie, soup):
     try:
-        soup = get_soup(movie)
-        rate =  soup.find('span', itemprop='contentRating').contents[0].strip()
+        rate = soup.find('span', itemprop='contentRating').contents[0].strip()
         return rate
     except:
         return "N/A"
 
-def get_genre(movie):
+def get_genre(movie, soup):
     try:
-        soup = get_soup(movie)
         genre_list = soup.findAll('span', itemprop='genre')
         genres = []
         for genre in genre_list:
@@ -112,9 +103,8 @@ def get_genre(movie):
     except:
         return "N/A"
 
-def get_release_date(movie):
+def get_release_date(movie, soup):
     try:
-        soup = get_soup(movie)
         date = soup.find('meta', itemprop='datePublished').contents[0]
         return date
     except:
@@ -122,8 +112,10 @@ def get_release_date(movie):
 
 def get_all_details(movie):
     response = []
+
+    soup = get_soup(movie)
     
-    title = get_title(movie)
+    title = get_title(movie, soup)
     if title == "N/A":
         movie_response = "False"
         error_code = "Movie not found!"
@@ -131,15 +123,15 @@ def get_all_details(movie):
         response.append({'Error': error_code})
         return json.dumps(response)
 
-    year = get_year(movie)
-    rating = get_rating(movie)
-    votes =  get_votes(movie)
-    duration = get_duration(movie)
-    content = get_content_rating(movie)
-    genre = get_genre(movie)
-    director = get_director(movie)
-    writer = get_writer(movie)
-    actors = get_actors(movie)
+    year = get_year(movie, soup)
+    rating = get_rating(movie, soup)
+    votes =  get_votes(movie, soup)
+    duration = get_duration(movie, soup)
+    content = get_content_rating(movie, soup)
+    genre = get_genre(movie, soup)
+    director = get_director(movie, soup)
+    writer = get_writer(movie, soup)
+    actors = get_actors(movie, soup)
 
     response.append({'Title': title})
     response.append({'Year': year})
