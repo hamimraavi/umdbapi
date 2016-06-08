@@ -158,6 +158,6 @@ def get_all_details(movie):
     #response['Director'] = director
     #response['Writer'] = writer
     #response['Actors'] = actors
-    return response
+    return json.dumps(response)
 
 #print get_all_details('cars')
