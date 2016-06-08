@@ -57,10 +57,12 @@ def get_votes(movie, soup):
 def get_actors(movie, soup):
     try:
         actor_list = soup.findAll('span', itemprop='actors')
-        actors = []
+        actors = ""
         for actor in actor_list:
             str_act = str(actor).rpartition('itemprop="name"')[-1]
-            actors.append(re.search('\>(.*?)\<', str_act).group(1))
+            actors += (re.search('\>(.*?)\<', str_act).group(1) + ", ")
+        if actors.endswith(", "):
+            actors = actors[:-len(", ")]
         return actors
     except:
         return "N/A"
@@ -69,10 +71,12 @@ def get_actors(movie, soup):
 def get_director(movie, soup):
     try:
         director_list = soup.findAll('span', itemprop='director')
-        directors = []
+        directors = ""
         for director in director_list:
             str_dir = str(director).rpartition('itemprop="name"')[-1]
-            directors.append(re.search('\>(.*?)\<', str_dir).group(1))
+            directors += (re.search('\>(.*?)\<', str_dir).group(1) + ", ")
+        if directors.endswith(", "):
+            directors = directors[:-len(", ")]
         return directors
     except:
         return "N/A"
@@ -81,10 +85,12 @@ def get_director(movie, soup):
 def get_writer(movie, soup):
     try:
         writer_list = soup.findAll('span', itemprop='creator')
-        writers = []
+        writers = ""
         for writer in writer_list:
             str_writer = str(writer).rpartition('itemprop="name"')[-1]
-            writers.append(re.search('\>(.*?)\<', str_writer).group(1))
+            writers += (re.search('\>(.*?)\<', str_writer).group(1) + ", ")
+        if writers.endswith(", "):
+            writers = writers[:-len(", ")]
         return writers
     except:
         return "N/A"
@@ -111,7 +117,7 @@ def get_genre(movie, soup):
         genres = ""
         for genre in genre_list:
             str_gen = str(genre).rpartition('itemprop="genre"')[-1]
-            genres.join((re.search('\>(.*?)\<', str_gen).group(1)), ", ")
+            genres += (re.search('\>(.*?)\<', str_gen).group(1) + ", ")
         if genres.endswith(", "):
             genres = genres[:-len(", ")]
         return genres
