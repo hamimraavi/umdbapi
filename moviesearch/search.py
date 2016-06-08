@@ -148,13 +148,13 @@ def get_all_details(movie):
     writer = get_writer(movie, soup)
     actors = get_actors(movie, soup)
 
-    response['Title'] = title
-    response['Year'] = year
-    response['IMDb Rating'] = rating
-    response['Votes'] = votes
-    response['Runtime'] = duration
-    response['Rated'] = content
-    response['Genre'] = genre
+    response["Title"] = title
+    response["Year"] = year
+    response["IMDb Rating"] = rating
+    response["Votes"] = votes
+    response["Runtime"] = duration
+    response["Rated"] = content
+    response["Genre"] = genre
     #response['Director'] = director
     #response['Writer'] = writer
     #response['Actors'] = actors
