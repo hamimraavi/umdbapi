@@ -7,7 +7,7 @@ def index(request):
     return HttpResponse(res)
 
 
-def results1(request):
+def results(request):
     moviename = request.GET['t']
     res = search.get_all_details(moviename)
     return HttpResponse(res)

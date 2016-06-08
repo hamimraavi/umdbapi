@@ -6,7 +6,11 @@ from mechanize import Browser
 
 def get_soup(movie):
     movie = '+'.join(movie.split())
-    url = "%s%s%s" % ("http://www.imdb.com/find?ref_=nv_sr_fn&q=", movie, "&s=all")
+    url = "%s%s%s" % (
+        "http://www.imdb.com/find?ref_=nv_sr_fn&q=",
+        movie,
+        "&s=all"
+    )
     br = Browser()
     br.open(url)
     try:
