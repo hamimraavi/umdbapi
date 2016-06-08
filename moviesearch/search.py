@@ -159,5 +159,3 @@ def get_all_details(movie):
     response['Writer'] = writer
     response['Actors'] = actors
     return json.dumps(response)
-
-#print get_all_details('cars')
