@@ -126,7 +126,7 @@ def get_release_date(movie, soup):
 
 
 def get_all_details(movie):
-    response = []
+    response = {}
 
     soup = get_soup(movie)
 
@@ -134,9 +134,9 @@ def get_all_details(movie):
     if title == "N/A":
         movie_response = "False"
         error_code = "404"
-        response.append({'Response': movie_response})
-        response.append({'Error': error_code})
-        return json.dumps(response)
+        response['Response'] = movie_response
+        response['Error'] = error_code
+        return response
 
     year = get_year(movie, soup)
     rating = get_rating(movie, soup)
@@ -148,14 +148,14 @@ def get_all_details(movie):
     writer = get_writer(movie, soup)
     actors = get_actors(movie, soup)
 
-    response.append({'Title': title})
-    response.append({'Year': year})
-    response.append({'IMDb Rating': rating})
-    response.append({'Votes': votes})
-    response.append({'Runtime': duration})
-    response.append({'Rated': content})
-    response.append({'Genre': genre})
-    response.append({'Director': director})
-    response.append({'Writer': writer})
-    response.append({'Actors': actors})
-    return json.dumps(response)
+    response['Title'] = title
+    response['Year'] = year
+    response['IMDb Rating'] = rating
+    response['Votes'] = votes
+    response['Runtime'] = duration
+    response['Rated'] =  content
+    response['Genre'] = genre
+    response['Director]' = director
+    response['Writer'] = writer
+    response['Actors'] = actors
+    return response
