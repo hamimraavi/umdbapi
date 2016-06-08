@@ -125,6 +125,15 @@ def get_release_date(movie, soup):
         return "N/A"
 
 
+def list_to_string(mylist):
+    if mylist == "N/A":
+        return mylist
+    mystring = mylist[0]
+    for i in range(1, len(list)):
+        mystring.join(mylist[i])
+    return mystring
+
+
 def get_all_details(movie):
     response = {}
 
@@ -143,10 +152,10 @@ def get_all_details(movie):
     votes = get_votes(movie, soup)
     duration = get_duration(movie, soup)
     content = get_content_rating(movie, soup)
-    genre = get_genre(movie, soup)
-    director = get_director(movie, soup)
-    writer = get_writer(movie, soup)
-    actors = get_actors(movie, soup)
+    genre = list_to_string(get_genre(movie, soup))
+    director = list_to_string(get_director(movie, soup))
+    writer = list_to_string(get_writer(movie, soup))
+    actors = list_to_string(get_actors(movie, soup))
 
     response["Title"] = title
     response["Year"] = year
