@@ -153,9 +153,11 @@ def get_all_details(movie):
     response['IMDb Rating'] = rating
     response['Votes'] = votes
     response['Runtime'] = duration
-    response['Rated'] =  content
+    response['Rated'] = content
     response['Genre'] = genre
-    response['Director]' = director
-    response['Writer'] = writer
-    response['Actors'] = actors
+    #response['Director'] = director
+    #response['Writer'] = writer
+    #response['Actors'] = actors
     return response
+
+#print get_all_details('cars')
