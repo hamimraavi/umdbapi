@@ -1,12 +1,12 @@
+import json
+import re
 from BeautifulSoup import BeautifulSoup
 from mechanize import Browser
-import re
-import json
 
 
 def get_soup(movie):
     movie = '+'.join(movie.split())
-    url = "http://www.imdb.com/find?ref_=nv_sr_fn&q="+movie+"&s=all"
+    url = "%s%s%s" % ("http://www.imdb.com/find?ref_=nv_sr_fn&q=", movie, "&s=all")
     br = Browser()
     br.open(url)
     try:

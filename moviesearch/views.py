@@ -1,5 +1,5 @@
-from django.http import HttpResponse
 import search
+from django.http import HttpResponse
 
 
 def index(request):
@@ -11,5 +11,3 @@ def results1(request):
     moviename = request.GET['t']
     res = search.get_all_details(moviename)
     return HttpResponse(res)
-
-# Create your views here.
