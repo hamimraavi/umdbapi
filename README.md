@@ -1,13 +1,13 @@
 #umdbapi
 UMDb API
 
-This api provides the functionality to retrieve IMDb information <br />
-about the movies provided in the url. The results are returned in<br />
-JSON format.<br /><br />
+This api provides the functionality to retrieve IMDb information
+about the movies provided in the url. The results are returned in
+JSON format.
 
-Replace the name of the movie you want to search in the given url:<br />
-https://umdb.herokuapp.com/moviesearch/?t=moviename<br /><br />
+Replace the name of the movie you want to search in the given url:
+https://umdb.herokuapp.com/moviesearch/?t=moviename
 
-#TODO:<br />
-Provide other movies that match the search string.<br />
+##TODO:
+Provide other movies that match the search string.
 

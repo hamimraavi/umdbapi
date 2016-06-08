@@ -133,7 +133,7 @@ def get_all_details(movie):
     title = get_title(movie, soup)
     if title == "N/A":
         movie_response = "False"
-        error_code = "Movie not found!"
+        error_code = "404"
         response.append({'Response': movie_response})
         response.append({'Error': error_code})
         return json.dumps(response)
