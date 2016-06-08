@@ -11,7 +11,6 @@ def get_soup(movie):
     br.open(url)
     try:
         link = list(br.links(url_regex=re.compile(r"/title/tt*")))[0]
-        print link
     except:
         return ""
     else:
