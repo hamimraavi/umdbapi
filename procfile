@@ -1,1 +1,1 @@
-web: gunicorn myimdb.wsgi
+web: gunicorn myimdb.wsgi --log-file -
