@@ -1,13 +1,14 @@
 import search
+from django.http import HttpResponse
 from django.http import JsonResponse
 
 
 def index(request):
-    res = search.get_all_details("inception")
-    return HttpResponse(res)
+    return HttpResponse("Welcome to UMDb!")
 
 
 def results(request):
     moviename = request.GET['t']
-    res = search.everything(moviename)
+    no_of_queries = request.GET['q']
+    res = search.get_all_movies(moviename, no_of_queries)
     return JsonResponse(res, safe=False)

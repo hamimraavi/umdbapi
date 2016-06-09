@@ -14,7 +14,7 @@ def get_soup(movie, index):
     br = Browser()
     br.open(url)
     try:
-        link = list(br.links(url_regex=re.compile(r"/title/tt*")))[index]
+        link = list(br.links(url_regex=re.compile(r"/title/tt*")))[index*2]
     except:
         return ""
     else:
@@ -170,12 +170,9 @@ def get_all_details(movie, index):
     return response
 
 
-def everything(movie): 
-    k1 = get_all_details(movie, 0)
-    k2 = get_all_details(movie, 2)
-    k3 = get_all_details(movie, 4)
-    ans = []
-    ans.append(k1)
-    ans.append(k2)
-    ans.append(k3)
-    return ans
+def get_all_movies(movie, no_of_queries):
+    all_movies = []
+    for index in range(0, no_of_queries):
+        movie_details = get_all_details(movie, index)
+        all_movies.append(movie_details)
+    return all_movies
