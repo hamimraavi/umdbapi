@@ -1,4 +1,5 @@
 import re
+
 from BeautifulSoup import BeautifulSoup
 from mechanize import Browser
 
@@ -107,7 +108,6 @@ def get_duration(movie, soup):
 def get_content_rating(movie, soup):
     try:
         rate = soup.find('span', itemprop='contentRating').contents[0].strip()
-        print rate
         return rate
     except:
         return FIELD_NOT_FOUND
