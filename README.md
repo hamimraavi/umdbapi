@@ -7,8 +7,11 @@ JSON format.
 
 Replace the name of the movie you want to search in the given url:
 
-https://umdb.herokuapp.com/moviesearch/?t=moviename
+https://umdb.herokuapp.com/moviesearch/?t=moviename&q=number
 
-##TODO:
-Provide other movies that match the search string.
+Example:
 
+https://umdb.herokuapp.com/moviesearch/?t=matrix&q=3
+
+The above url would return the first 3 search results for movie names matching
+the keyword "matrix"
