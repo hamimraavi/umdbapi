@@ -3,6 +3,8 @@ import re
 from BeautifulSoup import BeautifulSoup
 from mechanize import Browser
 
+FIELD_NOT_FOUND = "N/A"
+
 
 def get_soup(movie, index):
     movie = '+'.join(movie.split())
@@ -27,7 +29,7 @@ def get_title(movie, soup):
     try:
         return soup.find('title').contents[0]
     except:
-        return "N/A"
+        return FIELD_NOT_FOUND
 
 
 def get_year(movie, soup):
@@ -36,7 +38,7 @@ def get_year(movie, soup):
         year = str(title_year)
         return re.search('.*([0-9]{4}).*', year).group(1)
     except:
-        return "N/A"
+        return FIELD_NOT_FOUND
 
 
 def get_rating(movie, soup):
@@ -44,14 +46,14 @@ def get_rating(movie, soup):
         rate = soup.find('span', itemprop='ratingValue')
         return str(rate.contents[0])
     except:
-        return "N/A"
+        return FIELD_NOT_FOUND
 
 
 def get_votes(movie, soup):
     try:
         return soup.find('span', itemprop='ratingCount').contents[0]
     except:
-        return "N/A"
+        return FIELD_NOT_FOUND
 
 
 def get_actors(movie, soup):
@@ -65,7 +67,7 @@ def get_actors(movie, soup):
             actors = actors[:-len(", ")]
         return actors
     except:
-        return "N/A"
+        return FIELD_NOT_FOUND
 
 
 def get_director(movie, soup):
@@ -79,7 +81,7 @@ def get_director(movie, soup):
             directors = directors[:-len(", ")]
         return directors
     except:
-        return "N/A"
+        return FIELD_NOT_FOUND
 
 
 def get_writer(movie, soup):
@@ -93,14 +95,14 @@ def get_writer(movie, soup):
             writers = writers[:-len(", ")]
         return writers
     except:
-        return "N/A"
+        return FIELD_NOT_FOUND
 
 
 def get_duration(movie, soup):
     try:
         return soup.find('time', itemprop='duration').contents[0].strip()
     except:
-        return "N/A"
+        return FIELD_NOT_FOUND
 
 
 def get_content_rating(movie, soup):
@@ -109,7 +111,7 @@ def get_content_rating(movie, soup):
         print rate
         return rate
     except:
-        return "N/A"
+        return FIELD_NOT_FOUND
 
 
 def get_genre(movie, soup):
@@ -123,7 +125,7 @@ def get_genre(movie, soup):
             genres = genres[:-len(", ")]
         return genres
     except:
-        return "N/A"
+        return FIELD_NOT_FOUND
 
 
 def get_release_date(movie, soup):
@@ -131,7 +133,7 @@ def get_release_date(movie, soup):
         date = soup.find('meta', itemprop='datePublished').contents[0]
         return date
     except:
-        return "N/A"
+        return FIELD_NOT_FOUND
 
 
 def get_all_details(movie, index):
@@ -140,7 +142,7 @@ def get_all_details(movie, index):
     soup = get_soup(movie, index)
 
     title = get_title(movie, soup)
-    if title == "N/A":
+    if title == FIELD_NOT_FOUND:
         movie_response = "False"
         error_code = "404"
         response["Response"] = movie_response
