@@ -167,7 +167,7 @@ def get_all_details(movie, index):
     response['Director'] = director
     response['Writer'] = writer
     response['Actors'] = actors
-    return json.dumps(response)
+    return JsonResponse(response)
 
 
 def everything(movie): 
@@ -178,4 +178,4 @@ def everything(movie):
     ans.append(k1)
     ans.append(k2)
     ans.append(k3)
-    return json.dumps(ans)
+    return JsonResponse(ans, safe=False)
