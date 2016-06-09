@@ -142,7 +142,7 @@ def get_all_details(movie, index):
 
     title = get_title(movie, soup)
     if title == FIELD_NOT_FOUND:
-        response["Error"] = 404
+        response["Error"] = "404"
         response["Message"] = "Not found"
         return response
 

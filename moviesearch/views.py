@@ -13,6 +13,6 @@ def get_movie_results(request, moviename, no_of_queries=1):
 
 def show_bad_request(request):
     response = {}
-    response["Error: "] = 400
-    response["Message: "] = "Bad Request"
+    response["Error"] = "400"
+    response["Message"] = "Bad Request"
     return JsonResponse(response)
