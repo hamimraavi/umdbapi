@@ -34,9 +34,8 @@ def get_title(movie, soup):
 
 def get_year(movie, soup):
     try:
-        title_year = soup.find('span', id='titleYear')
-        year = str(title_year)
-        return re.search('.*([0-9]{4}).*', year).group(1)
+        title_year = str(soup.find('span', id='titleYear'))
+        return re.search('.*([0-9]{4}).*', title_year).group(1)
     except:
         return FIELD_NOT_FOUND
 
@@ -59,6 +58,9 @@ def get_votes(movie, soup):
 def get_actors(movie, soup):
     try:
         actor_list = soup.findAll('span', itemprop='actors')
+    except:
+        return FIELD_NOT_FOUND
+    else:
         actors = ""
         for actor in actor_list:
             str_act = str(actor).rpartition('itemprop="name"')[-1]
@@ -66,13 +68,14 @@ def get_actors(movie, soup):
         if actors.endswith(", "):
             actors = actors[:-len(", ")]
         return actors
-    except:
-        return FIELD_NOT_FOUND
 
 
 def get_director(movie, soup):
     try:
         director_list = soup.findAll('span', itemprop='director')
+    except:
+        return FIELD_NOT_FOUND
+    else:
         directors = ""
         for director in director_list:
             str_dir = str(director).rpartition('itemprop="name"')[-1]
@@ -80,13 +83,14 @@ def get_director(movie, soup):
         if directors.endswith(", "):
             directors = directors[:-len(", ")]
         return directors
-    except:
-        return FIELD_NOT_FOUND
 
 
 def get_writer(movie, soup):
     try:
         writer_list = soup.findAll('span', itemprop='creator')
+    except:
+        return FIELD_NOT_FOUND
+    else:
         writers = ""
         for writer in writer_list:
             str_writer = str(writer).rpartition('itemprop="name"')[-1]
@@ -94,8 +98,6 @@ def get_writer(movie, soup):
         if writers.endswith(", "):
             writers = writers[:-len(", ")]
         return writers
-    except:
-        return FIELD_NOT_FOUND
 
 
 def get_duration(movie, soup):
@@ -116,6 +118,9 @@ def get_content_rating(movie, soup):
 def get_genre(movie, soup):
     try:
         genre_list = soup.findAll('span', itemprop='genre')
+    except:
+        return FIELD_NOT_FOUND
+    else:
         genres = ""
         for genre in genre_list:
             str_gen = str(genre).rpartition('itemprop="genre"')[-1]
@@ -123,8 +128,6 @@ def get_genre(movie, soup):
         if genres.endswith(", "):
             genres = genres[:-len(", ")]
         return genres
-    except:
-        return FIELD_NOT_FOUND
 
 
 def get_release_date(movie, soup):
