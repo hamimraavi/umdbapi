@@ -9,5 +9,5 @@ def index(request):
 
 def results(request):
     moviename = request.GET['t']
-    res = search.get_all_details(moviename)
+    res = search.everything(moviename)
     return HttpResponse(res)

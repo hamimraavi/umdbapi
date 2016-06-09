@@ -4,7 +4,7 @@ from BeautifulSoup import BeautifulSoup
 from mechanize import Browser
 
 
-def get_soup(movie):
+def get_soup(movie, index):
     movie = '+'.join(movie.split())
     url = "%s%s%s" % (
         "http://www.imdb.com/find?ref_=nv_sr_fn&q=",
@@ -14,7 +14,7 @@ def get_soup(movie):
     br = Browser()
     br.open(url)
     try:
-        link = list(br.links(url_regex=re.compile(r"/title/tt*")))[0]
+        link = list(br.links(url_regex=re.compile(r"/title/tt*")))[index]
     except:
         return ""
     else:
@@ -106,6 +106,7 @@ def get_duration(movie, soup):
 def get_content_rating(movie, soup):
     try:
         rate = soup.find('span', itemprop='contentRating').contents[0].strip()
+        print rate
         return rate
     except:
         return "N/A"
@@ -133,10 +134,10 @@ def get_release_date(movie, soup):
         return "N/A"
 
 
-def get_all_details(movie):
+def get_all_details(movie, index):
     response = {}
 
-    soup = get_soup(movie)
+    soup = get_soup(movie, index)
 
     title = get_title(movie, soup)
     if title == "N/A":
@@ -167,3 +168,14 @@ def get_all_details(movie):
     response['Writer'] = writer
     response['Actors'] = actors
     return json.dumps(response)
+
+
+def everything(movie): 
+    k1 = get_all_details(movie, 0)
+    k2 = get_all_details(movie, 2)
+    k3 = get_all_details(movie, 4)
+    ans = {}
+    ans["k1"] = k1
+    ans["k2"] = k2
+    ans["k3"] = k3
+    return json.dumps(ans)
