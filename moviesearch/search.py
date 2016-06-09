@@ -174,8 +174,8 @@ def everything(movie):
     k1 = get_all_details(movie, 0)
     k2 = get_all_details(movie, 2)
     k3 = get_all_details(movie, 4)
-    ans = {}
-    ans["k1"] = k1
-    ans["k2"] = k2
-    ans["k3"] = k3
+    ans = []
+    ans.append(k1)
+    ans.append(k2)
+    ans.append(k3)
     return json.dumps(ans)
