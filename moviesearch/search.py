@@ -172,7 +172,7 @@ def get_all_details(movie, index):
 
 def get_all_movies(movie, no_of_queries):
     all_movies = []
-    for index in range(0, no_of_queries):
+    for index in range(0, int(no_of_queries)):
         movie_details = get_all_details(movie, index)
         all_movies.append(movie_details)
     return all_movies
