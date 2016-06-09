@@ -1,4 +1,3 @@
-import json
 import re
 from BeautifulSoup import BeautifulSoup
 from mechanize import Browser
@@ -143,11 +142,9 @@ def get_all_details(movie, index):
 
     title = get_title(movie, soup)
     if title == FIELD_NOT_FOUND:
-        movie_response = "False"
-        error_code = "404"
-        response["Response"] = movie_response
-        response["Error"] = error_code
-        return json.dumps(response)
+        response["Error"] = 404
+        response["Message"] = "Not found"
+        return response
 
     year = get_year(movie, soup)
     rating = get_rating(movie, soup)
@@ -166,9 +163,9 @@ def get_all_details(movie, index):
     response["Runtime"] = duration
     response["Rated"] = content
     response["Genre"] = genre
-    response['Director'] = director
-    response['Writer'] = writer
-    response['Actors'] = actors
+    response["Director"] = director
+    response["Writer"] = writer
+    response["Actors"] = actors
     return response
 
 
