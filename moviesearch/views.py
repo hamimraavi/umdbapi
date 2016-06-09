@@ -10,4 +10,4 @@ def index(request):
 def results(request):
     moviename = request.GET['t']
     res = search.everything(moviename)
-    return HttpResponse(res)
+    return JsonResponse(res, safe=False)

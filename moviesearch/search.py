@@ -1,7 +1,6 @@
 import json
 import re
 from BeautifulSoup import BeautifulSoup
-from django.http import JsonResponse
 from mechanize import Browser
 
 
@@ -168,7 +167,7 @@ def get_all_details(movie, index):
     response['Director'] = director
     response['Writer'] = writer
     response['Actors'] = actors
-    return JsonResponse(response)
+    return response
 
 
 def everything(movie): 
@@ -179,4 +178,4 @@ def everything(movie):
     ans.append(k1)
     ans.append(k2)
     ans.append(k3)
-    return JsonResponse(ans, safe=False)
+    return ans
