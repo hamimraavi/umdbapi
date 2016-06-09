@@ -134,10 +134,10 @@ def get_release_date(movie, soup):
         return "N/A"
 
 
-def get_all_details(movie, index):
+def get_all_details(movie):
     response = {}
 
-    soup = get_soup(movie, index)
+    soup = get_soup(movie, 0)
 
     title = get_title(movie, soup)
     if title == "N/A":
