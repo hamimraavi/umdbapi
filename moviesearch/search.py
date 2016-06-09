@@ -1,6 +1,7 @@
 import json
 import re
 from BeautifulSoup import BeautifulSoup
+from django.http import JsonResponse
 from mechanize import Browser
 
 
