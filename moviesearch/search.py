@@ -217,9 +217,9 @@ def get_search_results(movie, index):
     return response
 
 
-def get_all_movies(moviename):
+def get_all_movies(moviename, no_of_queries):
     all_movies = []
-    for index in range(0, 5):
+    for index in range(0, int(no_of_queries)):
         movie_details = get_search_results(moviename, index)
         all_movies.append(movie_details)
     return all_movies

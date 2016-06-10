@@ -9,7 +9,8 @@ def index(request):
 
 def get_movie_results(request):
     moviename = request.GET.get('t')
-    res = search.get_all_movies(moviename)
+    no_of_queries = request.GET.get('q', 1)
+    res = search.get_all_movies(moviename, no_of_queries)
     return JsonResponse(res, safe=False)
 
 
