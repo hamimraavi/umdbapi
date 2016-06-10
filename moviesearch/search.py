@@ -17,7 +17,7 @@ def get_soup(movie, index):
     br.open(url)
     try:
         link = list(br.links(url_regex=re.compile(r"/title/tt*")))[index*2]
-    except:
+    except AttributeError:
         return ""
     else:
         res = br.follow_link(link)
@@ -36,7 +36,7 @@ def get_title_id(movie, index):
     br.open(url)
     try:
         link = list(br.links(url_regex=re.compile(r"/title/tt*")))[index*2]
-    except:
+    except AttributeError:
         return ""
     else:
         title_id = re.search(r"tt[0-9]+", str(link)).group()
@@ -46,7 +46,7 @@ def get_title_id(movie, index):
 def get_title(soup):
     try:
         return soup.find('title').contents[0].replace(" - IMDb", "")
-    except:
+    except AttributeError:
         return FIELD_NOT_FOUND
 
 
@@ -54,7 +54,7 @@ def get_year(soup):
     try:
         title_year = str(soup.find('span', id='titleYear'))
         return re.search('.*([0-9]{4}).*', title_year).group(1)
-    except:
+    except AttributeError:
         return FIELD_NOT_FOUND
 
 
@@ -62,21 +62,21 @@ def get_rating(soup):
     try:
         rate = soup.find('span', itemprop='ratingValue')
         return str(rate.contents[0])
-    except:
+    except AttributeError:
         return FIELD_NOT_FOUND
 
 
 def get_votes(soup):
     try:
         return soup.find('span', itemprop='ratingCount').contents[0]
-    except:
+    except AttributeError:
         return FIELD_NOT_FOUND
 
 
 def get_actors(soup):
     try:
         actor_list = soup.findAll('span', itemprop='actors')
-    except:
+    except AttributeError:
         return FIELD_NOT_FOUND
     else:
         actors = ""
@@ -91,7 +91,7 @@ def get_actors(soup):
 def get_director(soup):
     try:
         director_list = soup.findAll('span', itemprop='director')
-    except:
+    except AttributeError:
         return FIELD_NOT_FOUND
     else:
         directors = ""
@@ -106,7 +106,7 @@ def get_director(soup):
 def get_writer(soup):
     try:
         writer_list = soup.findAll('span', itemprop='creator')
-    except:
+    except AttributeError:
         return FIELD_NOT_FOUND
     else:
         writers = ""
@@ -121,7 +121,7 @@ def get_writer(soup):
 def get_duration(soup):
     try:
         return soup.find('time', itemprop='duration').contents[0].strip()
-    except:
+    except AttributeError:
         return FIELD_NOT_FOUND
 
 
@@ -129,14 +129,14 @@ def get_content_rating(soup):
     try:
         rate = soup.find('span', itemprop='contentRating').contents[0].strip()
         return rate
-    except:
+    except AttributeError:
         return FIELD_NOT_FOUND
 
 
 def get_genre(soup):
     try:
         genre_list = soup.findAll('span', itemprop='genre')
-    except:
+    except AttributeError:
         return FIELD_NOT_FOUND
     else:
         genres = ""
@@ -152,7 +152,7 @@ def get_release_date(soup):
     try:
         date = soup.find('meta', itemprop='datePublished').contents[0]
         return date
-    except:
+    except AttributeError:
         return FIELD_NOT_FOUND
 
 
@@ -207,13 +207,11 @@ def get_search_results(movie, index):
         return response
 
     title_id = get_title_id(movie, index)
-    year = get_year(soup)
     rating = get_rating(soup)
     actors = get_actors(soup)
 
     response["Title"] = title
     response["Title ID"] = title_id
-    response["Year"] = year
     response["IMDb Rating"] = rating
     response["Actors"] = actors
     return response
@@ -221,7 +219,7 @@ def get_search_results(movie, index):
 
 def get_all_movies(moviename):
     all_movies = []
-    for index in range(0, 3):
+    for index in range(0, 5):
         movie_details = get_search_results(moviename, index)
         all_movies.append(movie_details)
     return all_movies
