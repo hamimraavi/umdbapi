@@ -43,14 +43,14 @@ def get_title_id(movie, index):
         return title_id
 
 
-def get_title(movie, soup):
+def get_title(soup):
     try:
         return soup.find('title').contents[0].replace(" - IMDb", "")
     except:
         return FIELD_NOT_FOUND
 
 
-def get_year(movie, soup):
+def get_year(soup):
     try:
         title_year = str(soup.find('span', id='titleYear'))
         return re.search('.*([0-9]{4}).*', title_year).group(1)
@@ -58,7 +58,7 @@ def get_year(movie, soup):
         return FIELD_NOT_FOUND
 
 
-def get_rating(movie, soup):
+def get_rating(soup):
     try:
         rate = soup.find('span', itemprop='ratingValue')
         return str(rate.contents[0])
@@ -66,14 +66,14 @@ def get_rating(movie, soup):
         return FIELD_NOT_FOUND
 
 
-def get_votes(movie, soup):
+def get_votes(soup):
     try:
         return soup.find('span', itemprop='ratingCount').contents[0]
     except:
         return FIELD_NOT_FOUND
 
 
-def get_actors(movie, soup):
+def get_actors(soup):
     try:
         actor_list = soup.findAll('span', itemprop='actors')
     except:
@@ -88,7 +88,7 @@ def get_actors(movie, soup):
         return actors
 
 
-def get_director(movie, soup):
+def get_director(soup):
     try:
         director_list = soup.findAll('span', itemprop='director')
     except:
@@ -103,7 +103,7 @@ def get_director(movie, soup):
         return directors
 
 
-def get_writer(movie, soup):
+def get_writer(soup):
     try:
         writer_list = soup.findAll('span', itemprop='creator')
     except:
@@ -118,14 +118,14 @@ def get_writer(movie, soup):
         return writers
 
 
-def get_duration(movie, soup):
+def get_duration(soup):
     try:
         return soup.find('time', itemprop='duration').contents[0].strip()
     except:
         return FIELD_NOT_FOUND
 
 
-def get_content_rating(movie, soup):
+def get_content_rating(soup):
     try:
         rate = soup.find('span', itemprop='contentRating').contents[0].strip()
         return rate
@@ -133,7 +133,7 @@ def get_content_rating(movie, soup):
         return FIELD_NOT_FOUND
 
 
-def get_genre(movie, soup):
+def get_genre(soup):
     try:
         genre_list = soup.findAll('span', itemprop='genre')
     except:
@@ -148,7 +148,7 @@ def get_genre(movie, soup):
         return genres
 
 
-def get_release_date(movie, soup):
+def get_release_date(soup):
     try:
         date = soup.find('meta', itemprop='datePublished').contents[0]
         return date
@@ -156,26 +156,33 @@ def get_release_date(movie, soup):
         return FIELD_NOT_FOUND
 
 
-def get_all_details(movie, index):
+def get_all_details(title_id):
     response = {}
+    url = "%s%s%s" % (
+        "http://www.imdb.com/title/",
+        title_id,
+        "/?ref_=fn_al_tt_1"
+    )
 
-    soup = get_soup(movie, index)
+    br = Browser()
+    res = br.open(url)
 
-    title = get_title(movie, soup)
+    soup = BeautifulSoup(res)
+    title = get_title(soup)
     if title == FIELD_NOT_FOUND:
         response["Error"] = "404"
         response["Message"] = "Not found"
         return response
 
-    year = get_year(movie, soup)
-    rating = get_rating(movie, soup)
-    votes = get_votes(movie, soup)
-    duration = get_duration(movie, soup)
-    content = get_content_rating(movie, soup)
-    genre = get_genre(movie, soup)
-    director = get_director(movie, soup)
-    writer = get_writer(movie, soup)
-    actors = get_actors(movie, soup)
+    year = get_year(soup)
+    rating = get_rating(soup)
+    votes = get_votes(soup)
+    duration = get_duration(soup)
+    content = get_content_rating(soup)
+    genre = get_genre(soup)
+    director = get_director(soup)
+    writer = get_writer(soup)
+    actors = get_actors(soup)
 
     response["Title"] = title
     response["Year"] = year
@@ -195,14 +202,14 @@ def get_search_results(movie, index):
 
     soup = get_soup(movie, index)
 
-    title = get_title(movie, soup)
+    title = get_title(soup)
     if title == FIELD_NOT_FOUND:
         return response
 
     title_id = get_title_id(movie, index)
-    year = get_year(movie, soup)
-    rating = get_rating(movie, soup)
-    actors = get_actors(movie, soup)
+    year = get_year(soup)
+    rating = get_rating(soup)
+    actors = get_actors(soup)
 
     response["Title"] = title
     response["Title ID"] = title_id
@@ -210,7 +217,7 @@ def get_search_results(movie, index):
     response["IMDb Rating"] = rating
     response["Actors"] = actors
     return response
-    
+
 
 def get_all_movies(moviename):
     all_movies = []
@@ -218,5 +225,3 @@ def get_all_movies(moviename):
         movie_details = get_search_results(moviename, index)
         all_movies.append(movie_details)
     return all_movies
-
-print get_all_movies("Cars")
