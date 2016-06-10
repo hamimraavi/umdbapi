@@ -25,6 +25,24 @@ def get_soup(movie, index):
         return soup
 
 
+def get_title_id(movie, index):
+    movie = '+'.join(movie.split())
+    url = "%s%s%s" % (
+        "http://www.imdb.com/find?ref_=nv_sr_fn&q=",
+        movie,
+        "&s=all"
+    )
+    br = Browser()
+    br.open(url)
+    try:
+        link = list(br.links(url_regex=re.compile(r"/title/tt*")))[index*2]
+    except:
+        return ""
+    else:
+        title_id = re.search(r"tt[0-9]+", str(link)).group()
+        return title_id
+
+
 def get_title(movie, soup):
     try:
         return soup.find('title').contents[0]
@@ -172,9 +190,31 @@ def get_all_details(movie, index):
     return response
 
 
-def get_all_movies(movie, no_of_queries):
+def get_search_results(movie, index):
+    response = {}
+
+    soup = get_soup(movie, index)
+
+    title = get_title(movie, soup)
+    if title == FIELD_NOT_FOUND:
+        return response
+
+    title_id = get_title_id(movie, index)
+    year = get_year(movie, soup)
+    rating = get_rating(movie, soup)
+    actors = get_actors(movie, soup)
+
+    response["Title"] = title
+    response["Title ID"] = title_id
+    response["Year"] = year
+    response["IMDb Rating"] = rating
+    response["Actors"] = actors
+    return response
+    
+
+def get_all_movies(moviename):
     all_movies = []
-    for index in range(0, int(no_of_queries)):
-        movie_details = get_all_details(movie, index)
+    for index in range(0, 10):
+        movie_details = get_search_results(moviename, index)
         all_movies.append(movie_details)
     return all_movies
