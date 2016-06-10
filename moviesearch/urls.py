@@ -3,6 +3,6 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^([\w ]+)/$', views.get_movie_results),
+    url(r'search/.*$', views.get_movie_results),
     url(r'^$', views.index),
 ]

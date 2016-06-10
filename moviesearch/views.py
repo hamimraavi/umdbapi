@@ -6,7 +6,8 @@ def index(request):
     return HttpResponse("Welcome to UMDb!")
 
 
-def get_movie_results(request, moviename):
+def get_movie_results(request):
+    moviename = request.GET.get('t')
     res = search.get_all_movies(moviename)
     return JsonResponse(res, safe=False)
 

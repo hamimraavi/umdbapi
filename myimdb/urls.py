@@ -17,6 +17,6 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^moviesearch/', include('moviesearch.urls')),
+    url(r'^movies/', include('moviesearch.urls')),
     url(r'^admin/', admin.site.urls),
 ]

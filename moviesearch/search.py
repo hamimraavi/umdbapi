@@ -45,7 +45,7 @@ def get_title_id(movie, index):
 
 def get_title(movie, soup):
     try:
-        return soup.find('title').contents[0]
+        return soup.find('title').contents[0].replace(" - IMDb", "")
     except:
         return FIELD_NOT_FOUND
 
@@ -214,7 +214,9 @@ def get_search_results(movie, index):
 
 def get_all_movies(moviename):
     all_movies = []
-    for index in range(0, 10):
+    for index in range(0, 3):
         movie_details = get_search_results(moviename, index)
         all_movies.append(movie_details)
     return all_movies
+
+print get_all_movies("Cars")
